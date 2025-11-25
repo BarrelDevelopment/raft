@@ -41,20 +41,20 @@ class Program {
                     switch (Console.ReadKey(true).Key) {
                         case ConsoleKey.LeftArrow:
                             cnt--;
+                            calender.CalendarEvents.RemoveAt(calender.CalendarEvents.Count - 1);
                             break;
                         case ConsoleKey.RightArrow:
                             cnt++;
+                            calender.AddCalendarEvent(2025, 11, cnt);
                             break;
                     }
 
                     if (cnt == 30) {
                         calender.CalendarEvents.Clear();
-                        calender2.CalendarEvents.Clear();
                         cnt = 1;
                     }
-
-                    calender.AddCalendarEvent(2025, 11, cnt);
-                    calender2.AddCalendarEvent(2025, 12, cnt);
+                    
+                    
 
                     ctx.Refresh();
                     await Task.Delay(500);

@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using Spectre.Console.Rendering;
 
 namespace raft;
 // Welcome to RAFT RAFT RAFT (Redeem allowance and fuel tracker)
@@ -14,19 +15,24 @@ class Program {
                         new Layout("Top"),
                         new Layout("Bottom")));
 
+        int calendarColumns = 4;
+        
+        IRenderable[] calendars = new Calendar[12];
+        Grid calendarGrid = new Grid().AddColumns(calendarColumns);
+        for (int calenderCount = 0; calenderCount < 4; calenderCount++){
+            for (int calendarRows = 0; calendarRows < 3; calendarRows++) {
+                calendars[calendarRows] = new Calendar(2025, calenderCount * calendarColumns +1);
+            }
+            calendarGrid.AddRow(calendars);
+        }
 
-        var grid = new Grid();
-        grid.AddColumns(2);
-
-        var calender = new Calendar(2025, 11);
-        var calender2 = new Calendar(2025, 12);
-        grid.AddRow(calender);
-        grid.AddRow(calender2);
+        var grid = new Grid().AddColumns(4);
 
         layout["Left"].Update(
             new Panel(grid)
                 .Expand());
 
+        
 
         int cnt = 1;
         //Now I add some comments
@@ -36,29 +42,10 @@ class Program {
             .Overflow(VerticalOverflow.Ellipsis)
             .Cropping(VerticalOverflowCropping.Bottom)
             .StartAsync(async ctx => {
-
-                while (true) {
-                    switch (Console.ReadKey(true).Key) {
-                        case ConsoleKey.LeftArrow:
-                            cnt--;
-                            calender.CalendarEvents.RemoveAt(calender.CalendarEvents.Count - 1);
-                            break;
-                        case ConsoleKey.RightArrow:
-                            cnt++;
-                            calender.AddCalendarEvent(2025, 11, cnt);
-                            break;
-                    }
-
-                    if (cnt == 30) {
-                        calender.CalendarEvents.Clear();
-                        cnt = 1;
-                    }
-                    
-                    
-
+                
                     ctx.Refresh();
                     await Task.Delay(500);
-                }
             });
     }
 }
+

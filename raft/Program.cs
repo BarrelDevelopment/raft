@@ -13,6 +13,11 @@ class Program {
             throw new Exception("Layout is null");
         }
 
+        CompGridCalendarYear cl = new CompGridCalendarYear(2025);
+        
+        AnsiConsole.Write(cl.CalendarGird.Expand());
+/*
+ 
         AnsiConsole.Live(layout.Layout)
             .Start(ctx => {
                 while (userInupt != "e") {
@@ -24,6 +29,7 @@ class Program {
                     ctx.Refresh();
                 }
             });
+        */
     }
 }
 

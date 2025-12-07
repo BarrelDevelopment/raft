@@ -7,29 +7,35 @@ namespace raft;
 class Program {
 
     public static void Main(string[] args) {
-        string userInupt = String.Empty;
+        
+        //TODO: Add check if the terminal is in a certain size. Inform 
+        //user if not and force user to change size
+        Console.SetWindowSize(500, 500);
+
+        CompUserInput.InputType inputType = CompUserInput.InputType.None;
         CompLayout layout = new CompLayout();
+        
+        CompGridCalendarYear calendarYear = new CompGridCalendarYear(DateTime.Now.Year);
+
         if (layout.Layout == null) {
             throw new Exception("Layout is null");
         }
 
-        CompGridCalendarYear cl = new CompGridCalendarYear(2025);
+        CompUserInput userInput = new CompUserInput();
         
-        AnsiConsole.Write(cl.CalendarGird.Expand());
-/*
- 
         AnsiConsole.Live(layout.Layout)
             .Start(ctx => {
-                while (userInupt != "e") {
-                    userInupt = Console.ReadLine().ToLower();
+                while (inputType != CompUserInput.InputType.Exit) {
+                    inputType = userInput.ReadUserInput();
                     layout.UpdateContent(CompLayout.Section.statistics, new Panel(
                         Align.Center(
-                            new Markup($"Your input [blue]{userInupt}[/]"),
-                            VerticalAlignment.Middle)).Expand());
+                            new Markup($"Your input [blue]{inputType}[/]"),
+                            VerticalAlignment.Middle)));
+                    layout.UpdateContent(CompLayout.Section.calendar, calendarYear.CalendarGird);
                     ctx.Refresh();
                 }
             });
-        */
+        
     }
 }
 

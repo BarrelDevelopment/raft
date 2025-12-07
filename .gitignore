@@ -1,0 +1,10 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+.DS_Store
+.idea/.idea.raft/.idea/indexLayout.xml
+.idea/.idea.raft/.idea/vcs.xml
+global.json
+raft.sln.DotSettings.user

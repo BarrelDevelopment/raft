@@ -28,8 +28,10 @@ public class CompLayout {
                 new Layout(sectionNames[Section.calendar]), 
                 new Layout(sectionNames[Section.details])
                     .SplitRows(
-                        new Layout(sectionNames[Section.statistics]).Size(10),
-                        new Layout(sectionNames[Section.controls]).Size(10)));
+                        new Layout(sectionNames[Section.statistics]),
+                        new Layout(sectionNames[Section.controls])
+                        
+                        ));
     }
 
     public void UpdateContent(Section section, IRenderable content) {

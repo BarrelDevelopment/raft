@@ -1,13 +1,12 @@
-using raft.models;
 using Spectre.Console;
 
-namespace raft.components;
+namespace raft.models;
 
-public class CompFuelLogEvent {
+public class FuelLogEvent {
     private CalendarEvent? calendarEvent;
     private FuelLogEntry? entry;
 
-    public CompFuelLogEvent CreateFuelLogEvent(FuelLogEntry fuleLogEntry, DateTime time) {
+    public FuelLogEvent CreateFuelLogEvent(FuelLogEntry fuleLogEntry, DateTime time) {
         entry = fuleLogEntry;
         calendarEvent = new CalendarEvent(time.Year, time.Month, time.Day);
         return this;

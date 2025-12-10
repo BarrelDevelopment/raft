@@ -5,12 +5,11 @@ using Calendar = Spectre.Console.Calendar;
 namespace raft.components;
 
 public class CompGridCalendarYear {
-    private const int GridColumns = 4; 
-    private const int GridRows = 3;
+    public int GridColumns { get; set; } = 4;
+    public int GridRows { get; set; } = 3;
+    public Grid CalendarGird { get; set; }
     
     private List<Calendar> calendars = new List<Calendar>();
-
-    public Grid CalendarGird { get; set; }
     
     public CompGridCalendarYear(int year) {
 

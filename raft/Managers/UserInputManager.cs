@@ -1,6 +1,6 @@
-namespace raft.components;
+namespace raft.Managers;
 
-public class CompUserInput {
+public class UserInputManager {
     public enum InputType {
         NextCalendarDay,            // RightArrow
         NextCalendarMonth,          // SHIFT+RightArrow

@@ -8,4 +8,5 @@ public class AppSettings {
     public int ConsolenWidth { get; set; }
     public int ConsolenHeight { get; set; }
     public int MainLayoutPadding { get; set; }
+    
 }

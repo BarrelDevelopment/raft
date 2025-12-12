@@ -1,8 +1,9 @@
+using raft.models;
 using Spectre.Console;
 using Spectre.Console.Rendering;
 
-namespace raft.components;
-public class CompLayout {
+namespace raft.views;
+public class LayoutView {
 
     public enum Section {
         root, 
@@ -12,6 +13,9 @@ public class CompLayout {
         controls
     }
 
+    public int CalculatedCalendarLayoutSize { get; private set; }
+    public int CalculatedMainLayoutSize { get; private set; }
+    
     private readonly Dictionary<Section, string> sectionNames = new Dictionary<Section, string>() {
         { Section.root, "root" },
         { Section.calendar, "Calendar" },
@@ -22,19 +26,24 @@ public class CompLayout {
     
     public Layout? Layout { get; set; }
     
-    public CompLayout() {
+    public LayoutView(AppSettings settings) {
+
+        CalculatedCalendarLayoutSize = (int)Math.Floor(settings.ConsolenWidth / 10.0 * 7) - settings.MainLayoutPadding;
+        CalculatedMainLayoutSize = (int)Math.Floor(settings.ConsolenWidth / 10.0 * 3) - settings.MainLayoutPadding;
+        
         Layout = new Layout(sectionNames[Section.root])
             .SplitColumns(
-                new Layout(sectionNames[Section.calendar]), 
+                new Layout(sectionNames[Section.calendar])
+                    .Ratio(2)
+                    .Size(CalculatedCalendarLayoutSize),
                 new Layout(sectionNames[Section.details])
                     .SplitRows(
                         new Layout(sectionNames[Section.statistics]),
                         new Layout(sectionNames[Section.controls])
-                        
-                        ));
+                        ).Size(CalculatedMainLayoutSize));
     }
 
-    public void UpdateContent(Section section, IRenderable content) {
+    public void UpdateView(Section section, IRenderable content) {
         Layout?[sectionNames[section]].Update(content);
     }
 }

@@ -20,8 +20,14 @@ public class UserInputManager {
         Exit,                       // ESC
         None
     }
+
+    public bool HandelUserInput() {
+        var userInput = GetUserInput();
+        if (userInput == InputType.Exit) return false;
+        return true;
+    }
     
-    public InputType GetUserInput() {
+    private InputType GetUserInput() {
         Console.TreatControlCAsInput = true;
         ConsoleKeyInfo keyInfo = Console.ReadKey(true);
 

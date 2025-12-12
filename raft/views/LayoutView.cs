@@ -13,8 +13,8 @@ public class LayoutView {
         controls
     }
 
-    public int CalculatedCalendarLayoutSize { get; private set; }
-    public int CalculatedMainLayoutSize { get; private set; }
+    private int CalculatedCalendarLayoutSize { get; set; }
+    private int CalculatedMainLayoutSize { get; set; }
     
     private readonly Dictionary<Section, string> sectionNames = new Dictionary<Section, string>() {
         { Section.root, "root" },

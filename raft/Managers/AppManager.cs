@@ -13,7 +13,7 @@ public class AppManager {
         Culture = CultureInfo.CurrentCulture,
     };
 
-    private readonly UserInputManager? userInputManager;
+    private readonly UserInputManager userInputManager;
     
     public AppManager(AppSettings? settings = null) {
         settings ??= new AppSettings() {
@@ -30,13 +30,13 @@ public class AppManager {
     public void Run() {
         UserInputManager.InputType inputType = UserInputManager.InputType.None;
         bool running = true;
-        
+
         AnsiConsole.Live(uiManager.mainLayoutView.Layout)
             .Start(ctx => {
                 while (running) {
-                    
+                    uiManager.UpdateUi();
                     ctx.Refresh();
-                    inputType = userInputManager.GetUserInput();
+                    running = userInputManager.HandelUserInput();
                 }
             });
     }

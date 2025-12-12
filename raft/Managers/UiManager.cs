@@ -6,18 +6,13 @@ namespace raft.Managers;
 
 public class UiManager {
     // Implements all views but the model of each view in the app manager 
-    public readonly LayoutView? mainLayoutView;
-    private CalendarView? calendarGridView;
-    private ControlView? controlPanelView;
-    
-    private AppSettings settings;
-    private AppManager appManager;
+    public readonly LayoutView mainLayoutView;
+    private readonly CalendarView calendarGridView;
+    private readonly ControlView controlPanelView;
     
     public UiManager(AppSettings settings, AppManager appManager) {
-        this.settings = settings;
-        this.appManager = appManager;
         
-        mainLayoutView = new LayoutView(this.settings);
+        mainLayoutView = new LayoutView(settings);
         controlPanelView = new ControlView();
         calendarGridView = new CalendarView(appManager.CalendarModel);
         
@@ -37,4 +32,6 @@ public class UiManager {
     public void UpdateUi() {
         
     }
+
+    
 }

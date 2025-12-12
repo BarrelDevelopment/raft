@@ -5,7 +5,7 @@ namespace raft.views;
 //TODO: Will not be change anymore. Change to static?
 //But how will it work with the ui manager? Are we fucked up?
 public class ControlView {
-    public Panel? Panel { get; set; }
+    public Panel Panel { get; set; }
 
     // ReSharper disable once ConvertConstructorToMemberInitializers
     public ControlView() {

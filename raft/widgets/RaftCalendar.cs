@@ -165,7 +165,9 @@ public sealed class RaftCalendar : JustInTimeRenderable, IHasCulture, IHasTableB
         }
 
         // Add columns
-        foreach (var order in GetWeekdays()) table.AddColumn(new TableColumn(order.GetAbbreviatedDayName(culture)));
+        foreach (var order in GetWeekdays())
+            table.AddColumn(new TableColumn(new Align(new Text(order.GetAbbreviatedDayName(culture)),
+                HorizontalAlignment.Center)));
 
         var row = new List<IRenderable>();
 
@@ -178,11 +180,11 @@ public sealed class RaftCalendar : JustInTimeRenderable, IHasCulture, IHasTableB
             if (weekdays[currentDay - 1] == weekday) {
                 var todayEvent = _calendarEvents.LastOrDefault(e => e.Month == Month && e.Day == currentDay);
                 if (todayEvent != null)
-                    row.Add(new Markup("(" + currentDay.ToString(CultureInfo.InvariantCulture) + ")",
+                    row.Add(new Markup(">" + currentDay.ToString(CultureInfo.InvariantCulture) + "<",
                         todayEvent.CustomHighlightStyle ?? _highlightStyle));
                 else
                     row.Add(new Text(" " + currentDay.ToString(CultureInfo.InvariantCulture) + " "));
-    
+
                 currentDay++;
             }
             else {

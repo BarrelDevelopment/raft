@@ -1,6 +1,6 @@
 namespace raft.models;
 
-public class Profile {
+public class SessionProfile {
     public string Name { get; set; }
     public List<FuelLogEntry> Entries { get; set; } = new List<FuelLogEntry>();
     

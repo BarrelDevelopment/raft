@@ -18,15 +18,8 @@ public class AppManager {
         //Culture = new CultureInfo("en-US")
         Culture = CultureInfo.CurrentCulture
     };
-    public AppManager(AppSettings? settings = null) {
-        settings ??= new AppSettings {
-            ConsoleHeight = Console.WindowHeight,
-            ConsoleWidth = Console.WindowWidth,
-            MainLayoutPadding = 0,
-            ShowInFullScreen = true
-        };
-
-        Settings = settings;
+    public AppManager() {
+        Settings = AppSettings.LoadAppSettings();
         UiManager = new UiManager(Settings, this);
         SessionManager = new SessionManager(Settings);
         userInputManager = new UserInputManager();
@@ -43,6 +36,7 @@ public class AppManager {
                     isAppRunning = userInputManager.HandelUserInput();
                     
                 }
+                AppSettings.SaveAppSettings(Settings);
             });
     }
 }

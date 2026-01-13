@@ -180,7 +180,7 @@ public sealed class RaftCalendar : JustInTimeRenderable, IHasCulture, IHasTableB
             if (weekdays[currentDay - 1] == weekday) {
                 var todayEvent = _calendarEvents.LastOrDefault(e => e.Month == Month && e.Day == currentDay);
                 if (todayEvent != null)
-                    row.Add(new Markup(">" + currentDay.ToString(CultureInfo.InvariantCulture) + "<",
+                    row.Add(new Markup(currentDay.ToString(CultureInfo.InvariantCulture) + "*",
                         todayEvent.CustomHighlightStyle ?? _highlightStyle));
                 else
                     row.Add(new Text(" " + currentDay.ToString(CultureInfo.InvariantCulture) + " "));

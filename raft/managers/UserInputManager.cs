@@ -1,77 +1,62 @@
-namespace raft.Managers;
+using raft.commands;
+
+namespace raft.managers;
 
 public class UserInputManager {
-    public enum InputType {
-        NextCalendarDay, // RightArrow
-        NextCalendarMonth, // SHIFT+RightArrow
-        NextCalendarYear, // CTL+SHIFT+RightArrow
-        PreviousCalendarDay, // LeftArrow
-        PreviousCalendarMonth, // SHIFT+LeftArrow
-        PreviousCalendarYear, // CTL+SHIFT+LeftArrow
-        DownCalendarDay, // DownArrow
-        DownCalendarMonth, // SHIFT+UpDown
-        UpCalendarDay, // UpArrow
-        UpCalendarMonth, // SHIFT+UpArrow
-        StatisticMonth, // ALT+M
-        StatisticYear, // ALT+Y
-        SwitchProfile, // ALT+P
-        EditProfileInfo, // ALT+E
-        SaveData, // CTL+S
-        Exit, // ESC
-        None
-    }
+    public event EventHandler<IUserCommand>? CommandIssued;
 
-    public bool HandelUserInput() {
-        var userInput = GetUserInput();
-        if (userInput == InputType.Exit) return false;
-        return true;
-    }
-
-    private InputType GetUserInput() {
+    public void GetUserInput() {
         Console.TreatControlCAsInput = true;
-        var keyInfo = Console.ReadKey(true);
 
+        var keyInfo = Console.ReadKey(true);
+        var command = MapToCommand(keyInfo);
+
+        if (command is not null)
+            CommandIssued?.Invoke(this, command);
+    }
+
+    private IUserCommand? MapToCommand(ConsoleKeyInfo keyInfo) {
         var key = keyInfo.Key;
         var mod = keyInfo.Modifiers;
 
         if (mod.HasFlag(ConsoleModifiers.Control) && mod.HasFlag(ConsoleModifiers.Shift))
             return key switch {
-                ConsoleKey.RightArrow => InputType.NextCalendarYear,
-                ConsoleKey.LeftArrow => InputType.PreviousCalendarYear,
-                _ => InputType.None
+                ConsoleKey.RightArrow => new NextCalendarYearCommand(),
+                ConsoleKey.LeftArrow => new PreviousCalendarYearCommand(),
+                _ => null
             };
 
         if (mod.HasFlag(ConsoleModifiers.Shift))
             return key switch {
-                ConsoleKey.RightArrow => InputType.NextCalendarMonth,
-                ConsoleKey.LeftArrow => InputType.PreviousCalendarMonth,
-                ConsoleKey.DownArrow => InputType.DownCalendarMonth,
-                ConsoleKey.UpArrow => InputType.UpCalendarMonth,
-                _ => InputType.None
+                ConsoleKey.RightArrow => new NextCalendarMonthCommand(),
+                ConsoleKey.LeftArrow => new PreviousCalendarMonthCommand(),
+                ConsoleKey.UpArrow => new UpCalendarMonthCommand(),
+                ConsoleKey.DownArrow => new DownCalendarMonthCommand(),
+                _ => null
             };
 
         if (mod.HasFlag(ConsoleModifiers.Control))
             return key switch {
-                ConsoleKey.S => InputType.SaveData,
-                _ => InputType.None
+                ConsoleKey.S => new SaveDataCommand(),
+                _ => null
             };
 
         if (mod.HasFlag(ConsoleModifiers.Alt))
             return key switch {
-                ConsoleKey.M => InputType.StatisticMonth,
-                ConsoleKey.Y => InputType.StatisticYear,
-                ConsoleKey.P => InputType.SwitchProfile,
-                ConsoleKey.E => InputType.EditProfileInfo,
-                _ => InputType.None
+                ConsoleKey.M => new StatisticMonthCommand(),
+                ConsoleKey.Y => new StatisticYearCommand(),
+                ConsoleKey.P => new SwitchProfileCommand(),
+                ConsoleKey.E => new EditProfileInfoCommand(),
+                _ => null
             };
 
         return key switch {
-            ConsoleKey.LeftArrow => InputType.PreviousCalendarDay,
-            ConsoleKey.RightArrow => InputType.NextCalendarDay,
-            ConsoleKey.DownArrow => InputType.DownCalendarDay,
-            ConsoleKey.UpArrow => InputType.UpCalendarDay,
-            ConsoleKey.Escape => InputType.Exit,
-            _ => InputType.None
+            ConsoleKey.RightArrow => new NextCalendarDayCommand(),
+            ConsoleKey.LeftArrow => new PreviousCalendarDayCommand(),
+            ConsoleKey.UpArrow => new UpCalendarDayCommand(),
+            ConsoleKey.DownArrow => new DownCalendarDayCommand(),
+            ConsoleKey.Escape => new ExitCommand(),
+            _ => null
         };
     }
 }

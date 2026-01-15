@@ -4,6 +4,7 @@ using raft.models;
 
 namespace raft.managers;
 
+
 public class SessionManager {
     private SessionProfile CurrentProfile { get; set; }
     private readonly AppSettings appSettings;

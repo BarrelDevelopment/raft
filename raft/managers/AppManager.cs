@@ -16,11 +16,6 @@ public class AppManager {
     private readonly AppSettings _settings;
     private bool _isAppRunning;
 
-    public CalendarAnnual CalendarModel { get; private set; } = new() {
-        Year = DateTime.Now.Year, //TODO: not so suitable as wished. shit 
-        //Culture = new CultureInfo("en-US")
-        Culture = CultureInfo.CurrentCulture
-    };
 
     public AppManager() {
         _settings = AppSettings.LoadAppSettings();
@@ -34,7 +29,7 @@ public class AppManager {
     public void Run() {
         _isAppRunning = true;
 
-        AnsiConsole.Live(_uiManager.mainLayoutView.Layout!)
+        AnsiConsole.Live(_uiManager._mainLayoutView.Layout!)
             .Start(ctx => {
                 while (_isAppRunning) {
                     _uiManager.UpdateUi(ctx);

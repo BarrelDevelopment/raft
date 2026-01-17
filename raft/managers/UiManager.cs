@@ -5,25 +5,22 @@ using Spectre.Console;
 namespace raft.Managers;
 
 public class UiManager {
-    private readonly CalendarView calendarGridView;
-
-    private readonly ControlView controlPanelView;
-
-    // Implements all views but the model of each view in the app manager 
-    public readonly LayoutView mainLayoutView;
+    
+    private readonly ControlView _controlPanelView;
+    public readonly LayoutView _mainLayoutView;
 
     public UiManager(AppSettings settings, AppManager appManager) {
-        mainLayoutView = new LayoutView(settings);
-        controlPanelView = new ControlView();
-        calendarGridView = new CalendarView(appManager.CalendarModel);
+        _mainLayoutView = new LayoutView(settings);
+        _controlPanelView = new ControlView();
+       
 
         InitializeLayout();
     }
 
     private void InitializeLayout() {
         try {
-            mainLayoutView.UpdateView(LayoutView.Section.calendar, calendarGridView.calendarGird);
-            mainLayoutView.UpdateView(LayoutView.Section.controls, controlPanelView.Panel);
+            //_mainLayoutView.UpdateView(LayoutView.Section.calendar, _calendarGridView.calendarGird);
+            _mainLayoutView.UpdateView(LayoutView.Section.controls, _controlPanelView.Panel);
         }
         catch (NullReferenceException exception) {
             AnsiConsole.WriteException(exception);
@@ -31,9 +28,6 @@ public class UiManager {
     }
 
     public void UpdateUi(LiveDisplayContext ctx) {
-        var randMonth = new Random().Next(1, 12);
-        var randDay = new Random().Next(1, 28);
-        calendarGridView.RenderCalendarCursor(new CalendarEvent(2025, randMonth, randDay));
         ctx.Refresh();
     }
 }

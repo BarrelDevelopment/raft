@@ -4,8 +4,10 @@ using raft.models;
 
 namespace raft.managers;
 
-
 public class SessionManager {
+    
+    private const string FILE_EXTENSION = ".json";
+    
     private SessionProfile CurrentProfile { get; set; }
     private readonly AppSettings appSettings;
 
@@ -23,7 +25,7 @@ public class SessionManager {
             NullValueHandling = NullValueHandling.Ignore
         };
         var path = Path.Combine(CurrentProfile.FileStorageLocation, CurrentProfile.Name);
-        if(Path.GetExtension(path) != ".json") path += ".json";
+        if(Path.GetExtension(path) != FILE_EXTENSION) path += FILE_EXTENSION;
         using var sw = new StreamWriter(path);
         using var writer = new JsonTextWriter(sw);
         serializer.Serialize(writer, CurrentProfile);

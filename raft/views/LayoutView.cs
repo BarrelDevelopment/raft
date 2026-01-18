@@ -11,17 +11,19 @@ public class LayoutView {
         info,
         calendar,
         details,
+        entryList,
         statistics,
         controls
     }
 
     private readonly Dictionary<Section, string> sectionNames = new() {
-        { Section.root, "root" },
+        { Section.root, "_root" },
         { Section.monthly, "Monthly" },
-        { Section.details, "Details" },
+        { Section.entryList, "Details" },
         { Section.statistics, "Statistics" },
         { Section.controls, "Controls" },
         { Section.info, "Info" },
+        { Section.details, "_details"},
         { Section.calendar, "Calendar" }
     };
 
@@ -41,14 +43,17 @@ public class LayoutView {
                 new Layout(sectionNames[Section.monthly])
                     .Ratio(2)
                     .Size(CalculatedCalendarLayoutSize),
+                new Layout(sectionNames[Section.controls]),
                 new Layout(sectionNames[Section.details])
                     .SplitRows(
-                        new Layout(sectionNames[Section.statistics]),
-                        new Layout(sectionNames[Section.controls])
+                        new Layout(sectionNames[Section.info]),
+                        new Layout(sectionNames[Section.calendar]),
+                        new Layout(sectionNames[Section.entryList]),
+                        new Layout(sectionNames[Section.statistics])
                     ).Size(CalculatedMainLayoutSize));
 
         if (settings.ShowInFullScreen)
-            Layout[sectionNames[Section.details]].Invisible();
+            Layout[sectionNames[Section.entryList]].Invisible();
     }
 
     private int CalculatedCalendarLayoutSize { get; }

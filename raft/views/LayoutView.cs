@@ -7,6 +7,8 @@ namespace raft.views;
 public class LayoutView {
     public enum Section {
         root,
+        monthly,
+        info,
         calendar,
         details,
         statistics,
@@ -15,10 +17,12 @@ public class LayoutView {
 
     private readonly Dictionary<Section, string> sectionNames = new() {
         { Section.root, "root" },
-        { Section.calendar, "Calendar" },
+        { Section.monthly, "Monthly" },
         { Section.details, "Details" },
         { Section.statistics, "Statistics" },
-        { Section.controls, "Controls" }
+        { Section.controls, "Controls" },
+        { Section.info, "Info" },
+        { Section.calendar, "Calendar" }
     };
 
     public LayoutView(AppSettings settings) {
@@ -34,7 +38,7 @@ public class LayoutView {
 
         Layout = new Layout(sectionNames[Section.root])
             .SplitColumns(
-                new Layout(sectionNames[Section.calendar])
+                new Layout(sectionNames[Section.monthly])
                     .Ratio(2)
                     .Size(CalculatedCalendarLayoutSize),
                 new Layout(sectionNames[Section.details])

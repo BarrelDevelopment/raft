@@ -7,10 +7,11 @@ namespace raft.views;
 public class LayoutView {
     public enum Section {
         root,
+        left,
+        right,
         monthly,
         info,
         calendar,
-        details,
         entryList,
         statistics,
         controls
@@ -18,12 +19,13 @@ public class LayoutView {
 
     private readonly Dictionary<Section, string> sectionNames = new() {
         { Section.root, "_root" },
+        { Section.left, "_left" },
+        { Section.right, "_right" },
         { Section.monthly, "Monthly" },
         { Section.entryList, "Details" },
         { Section.statistics, "Statistics" },
         { Section.controls, "Controls" },
         { Section.info, "Info" },
-        { Section.details, "_details"},
         { Section.calendar, "Calendar" }
     };
 
@@ -40,20 +42,17 @@ public class LayoutView {
 
         Layout = new Layout(sectionNames[Section.root])
             .SplitColumns(
-                new Layout(sectionNames[Section.monthly])
-                    .Ratio(2)
-                    .Size(CalculatedCalendarLayoutSize),
-                new Layout(sectionNames[Section.controls]),
-                new Layout(sectionNames[Section.details])
-                    .SplitRows(
+                new Layout(sectionNames[Section.left]).SplitRows(
+                        new Layout(sectionNames[Section.monthly]),
+                        new Layout(sectionNames[Section.controls])),
+                new Layout(sectionNames[Section.right]).SplitRows(
                         new Layout(sectionNames[Section.info]),
                         new Layout(sectionNames[Section.calendar]),
                         new Layout(sectionNames[Section.entryList]),
                         new Layout(sectionNames[Section.statistics])
-                    ).Size(CalculatedMainLayoutSize));
+                    ));
 
-        if (settings.ShowInFullScreen)
-            Layout[sectionNames[Section.entryList]].Invisible();
+        
     }
 
     private int CalculatedCalendarLayoutSize { get; }

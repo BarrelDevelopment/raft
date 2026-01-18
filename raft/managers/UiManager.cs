@@ -7,11 +7,13 @@ namespace raft.Managers;
 public class UiManager {
     
     private readonly ControlView _controlPanelView;
+    private readonly MonthView _monthView;
     public readonly LayoutView _mainLayoutView;
 
     public UiManager(AppSettings settings, AppManager appManager) {
         _mainLayoutView = new LayoutView(settings);
         _controlPanelView = new ControlView();
+        _monthView = new MonthView();
        
 
         InitializeLayout();
@@ -19,8 +21,9 @@ public class UiManager {
 
     private void InitializeLayout() {
         try {
+            _mainLayoutView.UpdateView(LayoutView.Section.monthly, _monthView.Table);
             //_mainLayoutView.UpdateView(LayoutView.Section.monthly, _calendarGridView.calendarGird);
-            _mainLayoutView.UpdateView(LayoutView.Section.controls, _controlPanelView.Panel);
+            //_mainLayoutView.UpdateView(LayoutView.Section.controls, _controlPanelView.Panel);
         }
         catch (NullReferenceException exception) {
             AnsiConsole.WriteException(exception);

@@ -30,7 +30,7 @@ public class UiManager {
         try {
             _mainLayoutView.UpdateView(LayoutView.Section.monthly, _monthView.Panel);
             _mainLayoutView.UpdateView(LayoutView.Section.calendar, _detailCalendarView.Calendar);
-            _mainLayoutView.UpdateView(LayoutView.Section.info, _infoView.Grid);
+            _mainLayoutView.UpdateView(LayoutView.Section.info, _infoView.Panel);
         }
         catch (NullReferenceException exception) {
             AnsiConsole.WriteException(exception);

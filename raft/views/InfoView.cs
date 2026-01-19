@@ -3,15 +3,16 @@ using Spectre.Console;
 namespace raft.views;
 
 public class InfoView {
-
-    private const int GIRD_COLUMNS = 2;
-    
-    private readonly Grid _grid = new Grid();
-    public Grid Grid => _grid;
-
+    private const string DUMMY_TEXT_LEFT = "Barrel";
+    private const string DUMMY_TEXT_REIGHT = "2026";
+    public Panel Panel { get; }
     public InfoView() {
-        _grid.AddColumn(new GridColumn().Alignment(Justify.Left)).Expand();
-        _grid.AddColumn(new GridColumn().Alignment(Justify.Right)).Expand();
-        _grid.AddRow(new Markup("[green]Barrel[/]"), new Markup("[green]2026[/]"));
+        Panel panelLeft = new Panel(DUMMY_TEXT_LEFT).RoundedBorder();
+        Panel panelRight = new Panel(DUMMY_TEXT_REIGHT).RoundedBorder();
+        Panel = new Panel(
+            new Columns(panelLeft, panelRight)
+                .Padding(10, 0))
+            .RoundedBorder()
+            .Expand();
     }
 }

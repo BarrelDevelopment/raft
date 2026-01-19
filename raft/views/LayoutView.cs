@@ -43,13 +43,13 @@ public class LayoutView {
         Layout = new Layout(sectionNames[Section.root])
             .SplitColumns(
                 new Layout(sectionNames[Section.left]).SplitRows(
-                        new Layout(sectionNames[Section.monthly]),
-                        new Layout(sectionNames[Section.controls])),
+                        new Layout(sectionNames[Section.monthly]).Ratio(9),
+                        new Layout(sectionNames[Section.controls]).Ratio(1)),
                 new Layout(sectionNames[Section.right]).SplitRows(
-                        new Layout(sectionNames[Section.info]),
-                        new Layout(sectionNames[Section.calendar]),
-                        new Layout(sectionNames[Section.entryList]),
-                        new Layout(sectionNames[Section.statistics])
+                        new Layout(sectionNames[Section.info]).Ratio(1),
+                        new Layout(sectionNames[Section.calendar]).Ratio(5),
+                        new Layout(sectionNames[Section.entryList]).Ratio(2),
+                        new Layout(sectionNames[Section.statistics]).Ratio(2)
                     ));
 
         

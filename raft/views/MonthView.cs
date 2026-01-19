@@ -1,18 +1,18 @@
 using System.Globalization;
 using Spectre.Console;
+using Spectre.Console.Rendering;
 
 namespace raft.views;
 
-public class MonthView {
+public class MonthView : IRaftView {
 
     private const int GRID_COLUMNS = 3;
     private const int GRID_ROWS = 4;
 
     private readonly List<Panel> _panels = new List<Panel>();
     private readonly Grid _grid = new Grid().Expand();
+    private readonly Panel _panel;
     
-    public Panel Panel { get; }
-
     public MonthView() {
         for (int month = 1; month <= 12; month++) {
             _panels.Add(new Panel(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(month))
@@ -28,8 +28,12 @@ public class MonthView {
             _grid.AddRow(_panels.GetRange(cnt * GRID_COLUMNS, GRID_COLUMNS).ToArray());
         }
 
-        Panel = new Panel(_grid).Border(BoxBorder.Rounded).HeaderAlignment(
+        _panel = new Panel(_grid).Border(BoxBorder.Rounded).HeaderAlignment(
             Justify.Center);
+    }
+
+    public IRenderable Render() {
+        return _panel;
     }
     
 }

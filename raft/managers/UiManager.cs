@@ -9,7 +9,10 @@ public class UiManager {
     private readonly ControlView _controlPanelView;
     private readonly MonthView _monthView;
     private readonly DetailCalendarView _detailCalendarView;
+    private readonly InfoView _infoView;
+    
     public readonly LayoutView _mainLayoutView;
+    
     
 
     public UiManager(AppSettings settings, AppManager appManager) {
@@ -17,6 +20,7 @@ public class UiManager {
         _controlPanelView = new ControlView();
         _monthView = new MonthView();
         _detailCalendarView = new DetailCalendarView();
+        _infoView = new InfoView();
        
 
         InitializeLayout();
@@ -26,8 +30,7 @@ public class UiManager {
         try {
             _mainLayoutView.UpdateView(LayoutView.Section.monthly, _monthView.Grid);
             _mainLayoutView.UpdateView(LayoutView.Section.calendar, _detailCalendarView.Calendar);
-            //_mainLayoutView.UpdateView(LayoutView.Section.monthly, _calendarGridView.calendarGird);
-            //_mainLayoutView.UpdateView(LayoutView.Section.controls, _controlPanelView.Panel);
+            _mainLayoutView.UpdateView(LayoutView.Section.info, _infoView.Grid);
         }
         catch (NullReferenceException exception) {
             AnsiConsole.WriteException(exception);

@@ -4,9 +4,12 @@ using Spectre.Console;
 namespace raft.views;
 
 public class MonthView {
+
+    private const int GRID_COLUMNS = 3;
+    private const int GRID_ROWS = 4;
     
     private readonly List<Panel> _panels = new List<Panel>();
-    private readonly Table _table = new Table().HideHeaders().Border(TableBorder.None);
+    private readonly Grid _grid = new Grid().Expand();
 
     public MonthView() {
         for (int month = 1; month <= 12; month++) {
@@ -14,15 +17,14 @@ public class MonthView {
                 CurrentCulture.DateTimeFormat.
                 GetAbbreviatedMonthName(month)).RoundedBorder());
         }
-        
-        _table.AddColumn(new TableColumn(string.Empty));
-        _table.AddColumn(new TableColumn(string.Empty));
-        _table.AddColumn(new TableColumn(string.Empty));
-        
-        for(int cnt = 0; cnt < 4; cnt++){
-            _table.AddRow(_panels.GetRange(cnt * 3, 3).ToArray());
+
+        //_grid.AddColumns(GRID_COLUMNS);
+        for(int column = 0; column < GRID_COLUMNS; column++) _grid.AddColumn(new GridColumn().Width(30));
+        for(int cnt = 0; cnt < GRID_ROWS; cnt++){
+            // ReSharper disable once CoVariantArrayConversion
+            _grid.AddRow(_panels.GetRange(cnt * GRID_COLUMNS, GRID_COLUMNS).ToArray());
         }
     }
     
-    public Table Table => _table;
+    public Grid Grid => _grid;
 }

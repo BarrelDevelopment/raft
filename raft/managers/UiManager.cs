@@ -21,7 +21,7 @@ public class UiManager {
 
     private void InitializeLayout() {
         try {
-            _mainLayoutView.UpdateView(LayoutView.Section.monthly, _monthView.Table);
+            _mainLayoutView.UpdateView(LayoutView.Section.monthly, _monthView.Grid);
             //_mainLayoutView.UpdateView(LayoutView.Section.monthly, _calendarGridView.calendarGird);
             //_mainLayoutView.UpdateView(LayoutView.Section.controls, _controlPanelView.Panel);
         }

@@ -8,12 +8,15 @@ public class UiManager {
     
     private readonly ControlView _controlPanelView;
     private readonly MonthView _monthView;
+    private readonly DetailCalendarView _detailCalendarView;
     public readonly LayoutView _mainLayoutView;
+    
 
     public UiManager(AppSettings settings, AppManager appManager) {
         _mainLayoutView = new LayoutView(settings);
         _controlPanelView = new ControlView();
         _monthView = new MonthView();
+        _detailCalendarView = new DetailCalendarView();
        
 
         InitializeLayout();
@@ -22,6 +25,7 @@ public class UiManager {
     private void InitializeLayout() {
         try {
             _mainLayoutView.UpdateView(LayoutView.Section.monthly, _monthView.Grid);
+            _mainLayoutView.UpdateView(LayoutView.Section.calendar, _detailCalendarView.Calendar);
             //_mainLayoutView.UpdateView(LayoutView.Section.monthly, _calendarGridView.calendarGird);
             //_mainLayoutView.UpdateView(LayoutView.Section.controls, _controlPanelView.Panel);
         }

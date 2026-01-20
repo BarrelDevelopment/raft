@@ -1,0 +1,10 @@
+using Spectre.Console;
+using Spectre.Console.Rendering;
+
+namespace raft.views;
+
+public class EntryView : IRaftView {
+    public IRenderable Render() {
+        return new Text(this.ToString()!);
+    }
+}

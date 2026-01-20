@@ -1,11 +1,13 @@
 using raft.models;
 using raft.views;
 using Spectre.Console;
+using Spectre.Console.Rendering;
 
 namespace raft.Managers;
 
 public class UiManager {
 
+    
 
     private readonly Dictionary<LayoutView.Section, IRaftView> _sectionViews;
     
@@ -18,7 +20,9 @@ public class UiManager {
             { LayoutView.Section.monthly, new MonthView() },
             { LayoutView.Section.calendar, new DetailCalendarView() },
             { LayoutView.Section.info, new InfoView() },
-            { LayoutView.Section.controls, new ControlView() }
+            { LayoutView.Section.controls, new ControlView() },
+            { LayoutView.Section.entryList, new EntryView() },
+            { LayoutView.Section.statistics, new StatisticView() }
         };
         
         InitializeLayout();

@@ -47,6 +47,7 @@ public class AppManager {
 
             case NextCalendarMonthCommand:
                 NextCalendarMonth();
+                
                 break;
 
             case SaveDataCommand:

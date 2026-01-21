@@ -12,13 +12,21 @@ public class MonthView : IRaftView {
     private readonly List<Panel> _panels = new List<Panel>();
     private readonly Grid _grid = new Grid().Expand();
     private readonly Panel _panel;
+
+    public int CursorIndex { get; set; } = 1;
     
     public MonthView() {
         for (int month = 1; month <= 12; month++) {
-            _panels.Add(new Panel(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(month))
-                .RoundedBorder()
-                .Padding(10,1)
-                .HeaderAlignment(Justify.Center));
+            var panel = new Panel(CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(month)).RoundedBorder()
+                .Padding(10, 1)
+                .HeaderAlignment(Justify.Center);
+
+            if (month == CursorIndex) panel.DoubleBorder();
+            else panel.RoundedBorder();
+            
+            _panels.Add(panel);
+
+
         }
 
         //_grid.AddColumns(GRID_COLUMNS);
